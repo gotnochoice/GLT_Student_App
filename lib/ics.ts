@@ -2,8 +2,12 @@ import type { EventRow } from './types';
 
 const stamp = (d: Date | string) => new Date(d).toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
 const esc = (s: string) => s.replace(/\\/g, '\\\\').replace(/\n/g, '\\n').replace(/,/g, '\\,').replace(/;/g, '\;');
-// RFC 5545 lines are folded at 75 bytes; plain ASCII fold is enough for our text.
-const fold = (l: string) => (l.length <= 74 ? l : l.slice(0, 74) + '\r\n ' + fold(l.slice(74)).replace(/^ /, ' '));
+// RFC 5545: long lines are folded with CRLF + space.
+const fold = (l: string): string => {
+  const parts: string[] = [];
+  for (let i = 0; i < l.length; i += 74) parts.push(l.slice(i, i + 74));
+  return parts.join('\r\n ');
+};
 
 export function buildIcs(e: EventRow, now = new Date()) {
   const end = e.ends_at ?? new Date(new Date(e.starts_at).getTime() + 3600_000).toISOString();

@@ -98,6 +98,15 @@ describe('help requests reach only the care liaison (and admins)', () => {
   });
 });
 
+describe('help request authors', () => {
+  it('only the care liaison and admins can look up who sent requests', async () => {
+    expect((await as(U.care, () => q(`select * from request_authors()`))).length).toBeGreaterThan(0);
+    for (const who of ['alice', 'bob', 'tutor', 'rep'] as const) {
+      expect(await as(U[who], () => q(`select * from request_authors()`))).toHaveLength(0);
+    }
+  });
+});
+
 describe('roles and profiles', () => {
   it('a member cannot promote themselves', async () => {
     await fails(as(U.alice, () => q(`update profiles set role='admin' where id=$1`, [U.alice])));

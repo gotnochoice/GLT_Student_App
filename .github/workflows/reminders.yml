@@ -1,0 +1,12 @@
+# Calls the reminder job every 15 minutes. Vercel's free plan only allows one cron a day,
+# so this is what makes the "1 hour before" reminder arrive on time. Free for public repos.
+# Needs two repository secrets: APP_URL (like https://glt-app.vercel.app) and CRON_SECRET.
+name: reminders
+on:
+  schedule: [{ cron: '*/15 * * * *' }]
+  workflow_dispatch:
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - run: curl --fail --silent --show-error --max-time 60 -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" "${{ secrets.APP_URL }}/api/cron/reminders"
