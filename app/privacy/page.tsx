@@ -4,7 +4,7 @@ export default function Privacy() {
   return (
     <main className="prose-sm mx-auto max-w-lg space-y-4 px-5 py-8">
       <Link href="/" className="muted inline-flex min-h-[44px] items-center text-sm underline">← Back</Link>
-      <h1 className="text-3xl">What we store and why</h1>
+      <h1>What we store and why</h1>
       <p className="muted">We keep as little as we can, in line with the Nigeria Data Protection Act.</p>
       <h2 className="text-xl">What we keep</h2>
       <ul className="list-disc space-y-1 pl-5">

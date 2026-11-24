@@ -31,7 +31,7 @@ export default function Help() {
 
   if (done) return (
     <div className="space-y-4">
-      <h1 className="text-3xl">{COUNSELLING_TITLE}</h1>
+      <h1>{COUNSELLING_TITLE}</h1>
       <div role="status" className="card space-y-3"><p>{COUNSELLING_TEXT}</p></div>
       <Link className="btn w-full" href="/people">Back to People</Link>
     </div>
@@ -39,7 +39,7 @@ export default function Help() {
   return (
     <>
       <Link href="/people" className="muted inline-flex min-h-[44px] items-center text-sm underline">← People</Link>
-      <h1 className="text-3xl">Ask for help</h1>
+      <h1>Ask for help</h1>
       <p className="muted">This goes only to the care liaison. Other members, tutors and reps cannot see it.</p>
       <form onSubmit={send} className="space-y-4">
         <Field label="What is it about?"><select className="input" value={topic} onChange={(e) => setTopic(e.target.value)}>{HELP_TOPICS.map((t) => <option key={t}>{t}</option>)}</select></Field>

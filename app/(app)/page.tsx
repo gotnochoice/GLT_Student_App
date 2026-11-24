@@ -5,7 +5,7 @@ import { EventCard, Empty, ErrorNote, Spinner } from '@/components/ui';
 import { useData, useFilteredEvents } from '@/lib/data';
 import { useSession } from '@/lib/session';
 import { supabase } from '@/lib/supabase';
-import { addDays, DAY_NAMES, fmtClock, lagosDate, lagosDow, lagosMinutes, weekStart } from '@/lib/time';
+import { addDays, DAY_NAMES, fmtClock, fmtDayTime, lagosDate, lagosDow, weekStart } from '@/lib/time';
 import { isToday } from '@/lib/events';
 import type { Goal } from '@/lib/types';
 
@@ -34,13 +34,35 @@ export default function Home() {
   }, [todayCount]);
 
   if (loading) return <Spinner />;
+  const goingNext = next7.filter((e) => ['going', 'attended'].includes(mine.get(e.id) ?? ''));
+  const nextUp = goingNext[0] ?? next7[0];
+  const pct = next7.length ? Math.round((goingNext.length / next7.length) * 100) : 0;
   return (
     <>
       <div>
-        <h1 className="text-3xl">Hello, {profile?.full_name.split(' ')[0] || 'friend'}</h1>
-        <p className="muted">{DAY_NAMES[lagosDow(now) - 1]}</p>
+        <h1>Hello, {profile?.full_name.split(' ')[0] || 'friend'}</h1>
+        <p className="muted">{DAY_NAMES[lagosDow(now) - 1]}. Here is what is on for you.</p>
       </div>
       {error && <ErrorNote>{error}</ErrorNote>}
+
+      <section className="hero" aria-label="This week">
+        <div className="grid gap-4 sm:grid-cols-[1fr_auto] sm:items-center">
+          <div className="space-y-2">
+            <p className="eyebrow">This week at GLT</p>
+            <p className="text-2xl font-bold tracking-tight">{next7.length === 0 ? 'Nothing planned yet' : `${next7.length} thing${next7.length > 1 ? 's' : ''} on in the next 7 days`}</p>
+            <div className="track" role="progressbar" aria-label="Signed up" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100}><div className="fill" style={{ width: `${pct}%` }} /></div>
+            <p className="text-sm opacity-90">You are signed up for {goingNext.length} of {next7.length}</p>
+          </div>
+        </div>
+        {nextUp && (
+          <div className="next">
+            <p className="eyebrow !text-white/70">Next up</p>
+            <p className="mt-1 text-lg font-bold leading-snug">{nextUp.title}</p>
+            <p className="mb-3 text-sm opacity-80">{fmtDayTime(nextUp.starts_at)}{nextUp.venue ? ` · ${nextUp.venue}` : ''}</p>
+            <Link href={`/events/${nextUp.id}`} className="btn btn-mint">{mine.has(nextUp.id) ? 'View details' : 'Sign up'}</Link>
+          </div>
+        )}
+      </section>
 
       <section aria-labelledby="today" className="space-y-2">
         <h2 id="today" className="text-xl">Today {todayCount > 0 && <span className="pill pill-gold align-middle">{todayCount}</span>}</h2>

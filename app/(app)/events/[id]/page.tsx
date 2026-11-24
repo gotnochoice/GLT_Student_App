@@ -70,7 +70,7 @@ export default function EventPage() {
       <Link href="/calendar" className="muted inline-flex min-h-[44px] items-center text-sm underline">← Calendar</Link>
       <div className="space-y-1">
         <span className={`pill ${e.kind === 'tutorial' ? 'pill-gold' : ''}`}>{KIND_LABEL[e.kind]}</span>
-        <h1 className="text-3xl">{e.title}</h1>
+        <h1>{e.title}</h1>
         <p className="font-semibold">{fmtDayTime(e.starts_at)}{e.ends_at ? ` – ${fmtTime(e.ends_at)}` : ''}</p>
         {e.venue && <p>{e.venue}</p>}
         {e.online_link && <p><a className="underline" href={e.online_link} rel="noopener noreferrer" target="_blank">Join online</a></p>}

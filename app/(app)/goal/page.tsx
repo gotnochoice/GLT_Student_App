@@ -15,7 +15,7 @@ export default function GoalPage() {
 
   useEffect(() => { supabase().from('goals').select('*').eq('week_start', ws).maybeSingle().then(({ data }) => { setGoal(data as Goal | null); setText((data as Goal | null)?.text ?? ''); }); }, [ws]);
   if (!profile?.goals_enabled) return (
-    <><h1 className="text-3xl">Weekly goal</h1><p className="muted">Weekly goals are off. They are private to you. <Link className="underline" href="/account">Turn them on in your account</Link>.</p></>
+    <><h1>Weekly goal</h1><p className="muted">Weekly goals are off. They are private to you. <Link className="underline" href="/account">Turn them on in your account</Link>.</p></>
   );
   if (goal === undefined) return <Spinner />;
 
@@ -30,7 +30,7 @@ export default function GoalPage() {
   }
   return (
     <>
-      <h1 className="text-3xl">Weekly goal</h1>
+      <h1>Weekly goal</h1>
       <p className="muted">One short goal for the week. Only you can see it.</p>
       <form onSubmit={save} className="space-y-3">
         <Field label="This week I will…"><input className="input" required maxLength={140} value={text} onChange={(e) => setText(e.target.value)} placeholder="e.g. Finish two chapters of MTH 201" /></Field>

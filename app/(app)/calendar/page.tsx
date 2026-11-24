@@ -29,9 +29,9 @@ export default function Calendar() {
 
   return (
     <>
-      <h1 className="text-3xl">Calendar</h1>
-      <div role="group" aria-label="Filter events" className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1">
-        {TABS.map((t) => <button key={t} className="chip" aria-pressed={tab === t} onClick={() => setTab(t)}>{t}</button>)}
+      <div><h1>Calendar</h1><p className="muted">Church events and tutorials in one list.</p></div>
+      <div role="group" aria-label="Filter events" className="tabs">
+        {TABS.map((t) => <button key={t} className="tab" aria-pressed={tab === t} onClick={() => setTab(t)}>{t}</button>)}
       </div>
       {loading ? <Spinner /> : error ? <ErrorNote>{error}</ErrorNote> : groups.length === 0 ? (
         <Empty>Nothing here yet. Use the chip at the top to look at other faculties.</Empty>

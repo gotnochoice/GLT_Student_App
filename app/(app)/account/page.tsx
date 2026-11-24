@@ -50,7 +50,7 @@ export default function Account() {
   const staff = profile.role !== 'member';
   return (
     <>
-      <h1 className="text-3xl">My account</h1>
+      <h1>My account</h1>
       <p className="muted text-sm">{profile.email}</p>
 
       {staff && (

@@ -10,7 +10,7 @@ export function Gate({ roles, title, children }: { roles: Role[]; title: string;
   return (
     <>
       <Link href="/account" className="muted inline-flex min-h-[44px] items-center text-sm underline">← My account</Link>
-      <h1 className="text-3xl">{title}</h1>
+      <h1>{title}</h1>
       {children}
     </>
   );

@@ -43,7 +43,7 @@ export default function Timetable() {
   if (loading) return <Spinner />;
   return (
     <>
-      <h1 className="text-3xl">Timetable</h1>
+      <div><h1>Timetable</h1><p className="muted">Your classes next to tutorials and events. We warn you about clashes.</p></div>
       {error && <ErrorNote>{error}</ErrorNote>}
       <div className="flex items-center justify-between gap-2">
         <button className="btn" onClick={() => setOffset(offset - 1)} aria-label="Previous week">←</button>

@@ -33,7 +33,7 @@ export default function People() {
     .sort((a, b) => (a.id === profile?.faculty_id ? -1 : b.id === profile?.faculty_id ? 1 : 0));
   return (
     <>
-      <h1 className="text-3xl">People</h1>
+      <div><h1>People</h1><p className="muted">Leaders, tutors and faculty advisers. Tap to chat on WhatsApp.</p></div>
       <Link href="/help" className="card block border-brand">
         <p className="font-semibold">Need help with something?</p>
         <p className="muted text-sm">Send a private request. Only the care liaison sees it. →</p>

@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { useEffect, useRef, type ReactNode } from 'react';
 import { KIND_LABEL } from '@/lib/events';
-import { fmtDayTime, fmtTime } from '@/lib/time';
+import { fmtDayTime, fmtTime, lagosDate } from '@/lib/time';
 import type { EventRow, Faculty } from '@/lib/types';
 
 export const Spinner = () => <p role="status" className="muted p-6 text-center">Loading…</p>;
@@ -58,18 +58,22 @@ export function EventCard({ e, faculties, going, status, count }: {
   e: EventRow; faculties: Faculty[]; going?: boolean; status?: string; count?: number;
 }) {
   const fac = e.faculty_id != null ? faculties.find((f) => f.id === e.faculty_id)?.name : null;
+  const d = lagosDate(e.starts_at);
   return (
-    <Link href={`/events/${e.id}`} className="card block min-h-[44px]">
-      <div className="mb-1 flex flex-wrap items-center gap-2">
-        <span className={KIND_STYLE[e.kind]}>{KIND_LABEL[e.kind]}</span>
-        {fac && <span className="muted text-xs">{fac}</span>}
-        {status === 'waiting' && <span className="pill pill-warn">Waiting list</span>}
-        {going && status !== 'waiting' && <span className="pill">{status === 'attended' ? 'Attended' : "You're going"}</span>}
+    <Link href={`/events/${e.id}`} className="card flex min-h-[44px] gap-3">
+      <div className="datebox" aria-hidden><span>{new Date(d + 'T00:00:00Z').toLocaleDateString('en-GB', { weekday: 'short', timeZone: 'UTC' })}</span><b>{d.slice(8)}</b></div>
+      <div className="min-w-0 flex-1">
+        <div className="mb-1 flex flex-wrap items-center gap-2">
+          <span className={KIND_STYLE[e.kind]}>{KIND_LABEL[e.kind]}</span>
+          {fac && <span className="muted text-xs">{fac}</span>}
+          {status === 'waiting' && <span className="pill pill-warn">Waiting list</span>}
+          {going && status !== 'waiting' && <span className="pill">{status === 'attended' ? 'Attended' : "You're going"}</span>}
+        </div>
+        <p className="font-semibold leading-snug">{e.title}</p>
+        <p className="muted text-sm">{fmtDayTime(e.starts_at)}{e.ends_at ? ` – ${fmtTime(e.ends_at)}` : ''}</p>
+        {(e.venue || e.online_link) && <p className="muted text-sm">{e.venue ?? 'Online'}</p>}
+        {e.capacity != null && count != null && <p className="muted text-xs">{count} of {e.capacity} places taken</p>}
       </div>
-      <p className="font-semibold">{e.title}</p>
-      <p className="muted text-sm">{fmtDayTime(e.starts_at)}{e.ends_at ? ` – ${fmtTime(e.ends_at)}` : ''}</p>
-      {(e.venue || e.online_link) && <p className="muted text-sm">{e.venue ?? 'Online'}</p>}
-      {e.capacity != null && count != null && <p className="muted text-xs">{count} of {e.capacity} places taken</p>}
     </Link>
   );
 }
