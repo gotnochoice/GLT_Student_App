@@ -40,8 +40,9 @@ export default function Home() {
   return (
     <>
       <div>
-        <h1>Hello, {profile?.full_name.split(' ')[0] || 'friend'}</h1>
-        <p className="muted">{DAY_NAMES[lagosDow(now) - 1]}. Here is what is on for you.</p>
+        <p className="kicker">{DAY_NAMES[lagosDow(now) - 1]}</p>
+        <h1>Hello, <em>{profile?.full_name.split(' ')[0] || 'friend'}</em></h1>
+        <p className="muted">Here is what is on for you.</p>
       </div>
       {error && <ErrorNote>{error}</ErrorNote>}
 
@@ -49,7 +50,7 @@ export default function Home() {
         <div className="grid gap-4 sm:grid-cols-[1fr_auto] sm:items-center">
           <div className="space-y-2">
             <p className="eyebrow">This week at GLT</p>
-            <p className="text-2xl font-bold tracking-tight">{next7.length === 0 ? 'Nothing planned yet' : `${next7.length} thing${next7.length > 1 ? 's' : ''} on in the next 7 days`}</p>
+            <p className="display text-2xl leading-tight">{next7.length === 0 ? 'Nothing planned yet' : <><em>{next7.length}</em> thing{next7.length > 1 ? 's' : ''} on in the next 7 days</>}</p>
             <div className="track" role="progressbar" aria-label="Signed up" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100}><div className="fill" style={{ width: `${pct}%` }} /></div>
             <p className="text-sm opacity-90">You are signed up for {goingNext.length} of {next7.length}</p>
           </div>
@@ -57,9 +58,9 @@ export default function Home() {
         {nextUp && (
           <div className="next">
             <p className="eyebrow">Next up</p>
-            <p className="mt-1 text-lg font-bold leading-snug">{nextUp.title}</p>
+            <p className="display mt-1 text-xl leading-snug">{nextUp.title}</p>
             <p className="mb-3 text-sm opacity-80">{fmtDayTime(nextUp.starts_at)}{nextUp.venue ? ` · ${nextUp.venue}` : ''}</p>
-            <Link href={`/events/${nextUp.id}`} className="btn btn-mint">{mine.has(nextUp.id) ? 'View details' : 'Sign up'}</Link>
+            <Link href={`/events/${nextUp.id}`} className="btn btn-gold">{mine.has(nextUp.id) ? 'View details' : 'Sign up'}</Link>
           </div>
         )}
       </section>

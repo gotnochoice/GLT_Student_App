@@ -71,7 +71,7 @@ function Inner({ children }: { children: ReactNode }) {
       {onboarded && (
         <aside className="sticky top-0 hidden h-dvh flex-col gap-1 border-r border-line p-4 md:flex" style={{ background: 'var(--side-bg)' }}>
           <Link href="/" className="mb-6 flex items-center gap-3 px-1 py-2" aria-label="GLT Academic Unit home">
-            <Logo size={40} /><span className="font-bold leading-tight">GLT Academic<br /><span className="text-accent">Unit</span></span>
+            <Logo size={40} /><span className="display leading-tight">GLT Academic<br /><span className="text-accent">Unit</span></span>
           </Link>
           <nav aria-label="Main" className="flex flex-col gap-1">
             {side.map((t) => <Link key={t.href} href={t.href} className="sidelink" aria-current={active(t.href) ? 'page' : undefined}><Icon d={t.d} />{t.label}</Link>)}
