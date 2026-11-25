@@ -69,17 +69,17 @@ function Inner({ children }: { children: ReactNode }) {
   return (
     <div className="md:grid md:min-h-dvh md:grid-cols-[264px_1fr]">
       {onboarded && (
-        <aside className="sticky top-0 hidden h-dvh flex-col gap-1 p-4 md:flex" style={{ background: 'var(--side)' }}>
-          <Link href="/" className="mb-6 flex items-center gap-3 px-1 py-2 text-white" aria-label="GLT Academic Unit home">
-            <Logo size={40} /><span className="font-bold leading-tight">GLT Academic<br /><span style={{ color: 'var(--mint)' }}>Unit</span></span>
+        <aside className="sticky top-0 hidden h-dvh flex-col gap-1 border-r border-line p-4 md:flex" style={{ background: 'var(--side-bg)' }}>
+          <Link href="/" className="mb-6 flex items-center gap-3 px-1 py-2" aria-label="GLT Academic Unit home">
+            <Logo size={40} /><span className="font-bold leading-tight">GLT Academic<br /><span className="text-accent">Unit</span></span>
           </Link>
           <nav aria-label="Main" className="flex flex-col gap-1">
             {side.map((t) => <Link key={t.href} href={t.href} className="sidelink" aria-current={active(t.href) ? 'page' : undefined}><Icon d={t.d} />{t.label}</Link>)}
           </nav>
-          <div className="mt-auto space-y-1 border-t border-white/10 pt-3">
+          <div className="mt-auto space-y-1 border-t border-line pt-3">
             <Link href="/account" className="sidelink !h-auto !py-2" aria-current={path === '/account' ? 'page' : undefined}>
               <span aria-hidden className="grid h-9 w-9 place-items-center rounded-full bg-brand font-bold text-white">{(profile?.full_name || '?').trim().charAt(0).toUpperCase()}</span>
-              <span className="min-w-0"><span className="block truncate text-white">{profile?.full_name || 'My account'}</span><span className="block truncate text-xs font-normal opacity-70">{profile?.email}</span></span>
+              <span className="min-w-0"><span className="block truncate text-fg">{profile?.full_name || 'My account'}</span><span className="block truncate text-xs font-normal opacity-70">{profile?.email}</span></span>
             </Link>
             <button className="sidelink w-full" onClick={signOut}><Icon d={I.out} />Log out</button>
           </div>

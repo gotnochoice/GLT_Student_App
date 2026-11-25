@@ -56,7 +56,7 @@ export default function Home() {
         </div>
         {nextUp && (
           <div className="next">
-            <p className="eyebrow !text-white/70">Next up</p>
+            <p className="eyebrow">Next up</p>
             <p className="mt-1 text-lg font-bold leading-snug">{nextUp.title}</p>
             <p className="mb-3 text-sm opacity-80">{fmtDayTime(nextUp.starts_at)}{nextUp.venue ? ` · ${nextUp.venue}` : ''}</p>
             <Link href={`/events/${nextUp.id}`} className="btn btn-mint">{mine.has(nextUp.id) ? 'View details' : 'Sign up'}</Link>
